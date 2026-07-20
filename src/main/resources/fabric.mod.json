@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "rosetta_library",
+  "version": "${version}",
+  "name": "Rosetta",
+  "description": "Cross-version and cross-loader compatibility primitives for Minecraft mods.",
+  "authors": ["Rasa Novum"],
+  "contact": {
+    "sources": "https://github.com/RasaNovum/Rosetta_Library"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "rosetta_library_icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}",
+    "dataanchor": ">=${dataanchor_version}"
+  }
+}

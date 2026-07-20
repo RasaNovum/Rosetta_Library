@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="All-Rights-Reserved"
+
+[[mods]]
+modId="rosetta_library"
+version="${version}"
+displayName="Rosetta"
+logoFile="rosetta_library_icon.png"
+description='''Cross-version and cross-loader compatibility primitives for Minecraft mods.'''
+
+[[dependencies.rosetta_library]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.rosetta_library]]
+modId="dataanchor"
+type="required"
+versionRange="[${dataanchor_version},)"
+ordering="NONE"
+side="BOTH"

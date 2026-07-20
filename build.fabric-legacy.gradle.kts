@@ -1,0 +1,51 @@
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
+import java.util.Properties
+
+plugins { id("fabric-loom") }
+
+val versionProperties = Properties().apply {
+    file("gradle.properties").inputStream().use(::load)
+}
+fun prop(name: String): String = versionProperties.getProperty(name)
+    ?: rootProject.findProperty(name)?.toString()
+    ?: error("Missing property '$name'")
+
+version = prop("mod_version")
+base.archivesName = prop("archives_base_name")
+
+repositories {
+    maven("https://api.modrinth.com/maven")
+    mavenCentral()
+}
+
+dependencies {
+    minecraft("com.mojang:minecraft:${prop("deps.minecraft")}")
+    mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc:fabric-loader:${prop("deps.loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
+    modImplementation("maven.modrinth:data-anchor:${prop("deps.data-anchor")}")
+}
+
+tasks.processResources {
+    val props = mapOf(
+        "version" to project.version,
+        "minecraft_version" to prop("deps.minecraft"),
+        "loader_version" to prop("deps.loader"),
+        "dataanchor_version" to prop("deps.data-anchor").substringBefore('-'),
+    )
+    inputs.properties(props)
+    filesMatching("fabric.mod.json") { expand(props) }
+    exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml")
+}
+
+val targetJavaVersion = prop("java_version").toInt()
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
+    options.release.set(targetJavaVersion)
+}
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    withSourcesJar()
+}
+tasks.named<AbstractArchiveTask>("remapJar") { archiveClassifier.set(project.name) }
+tasks.named<AbstractArchiveTask>("remapSourcesJar") { archiveClassifier.set("${project.name}-sources") }
