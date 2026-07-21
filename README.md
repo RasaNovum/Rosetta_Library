@@ -14,9 +14,9 @@ Rosetta uses [Stonecutter](https://stonecutter.kikugie.dev/) to maintain its ver
 
 | MC Version | Fabric Version | Forge Version | NeoForge Version | Quilt Version |
 |:----------:|:--------------:|:-------------:|:----------------:|:-------------:|
-|   26.1.x   |   ✅ `v0.1.0`   | ❌ Not Planned |    ✅ `v0.1.0`    | ❌ Not Planned |
-|   1.21.1   |   ✅ `v0.1.0`   | ❌ Not Planned |    ✅ `v0.1.0`    | ❌ Not Planned |
-|   1.20.1   |   ✅ `v0.1.0`   |  ✅ `v0.1.0`   |  ❌ Not Planned   | ❌ Not Planned |
+|   26.1.x   |       ✅        |       ❌       |        ✅         |       ❌       |
+|   1.21.1   |       ✅        |       ❌       |        ✅         |       ❌       |
+|   1.20.1   |       ✅        |       ✅       |        ❌         |       ❌       |
 
 ## Building
 
