@@ -8,7 +8,7 @@
   "contact": {
     "sources": "https://github.com/RasaNovum/Rosetta_Library"
   },
-  "license": "All-Rights-Reserved",
+  "license": "MIT",
   "icon": "rosetta_library_icon.png",
   "environment": "*",
   "depends": {

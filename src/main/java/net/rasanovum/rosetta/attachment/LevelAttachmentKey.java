@@ -21,14 +21,10 @@ public final class LevelAttachmentKey<T> {
     }
 
     static <T> LevelAttachmentKey<T> register(
-            String namespace, String path, Factory<T> factory, Writer<T> writer, Reader<T> reader
+            String namespace, String path, AttachmentFactory<ServerLevel, T> factory,
+            AttachmentWriter<ServerLevel, T> writer, AttachmentReader<ServerLevel, T> reader
     ) {
-        if (path == null || path.isBlank()) {
-            throw new IllegalArgumentException("Attachment path cannot be blank");
-        }
-        if (factory == null || writer == null || reader == null) {
-            throw new IllegalArgumentException("Attachment callbacks cannot be null");
-        }
+        AttachmentSupport.validate(path, factory, writer, reader);
 
         TrackedDataKey<PersistentLevelAttachment<T>> key = TrackedDataRegistries.LEVEL.register(
                 RegistryCompat.getLocation(namespace, path),
@@ -78,33 +74,18 @@ public final class LevelAttachmentKey<T> {
         return (Class) PersistentLevelAttachment.class;
     }
 
-    @FunctionalInterface
-    public interface Factory<T> {
-        T create(ServerLevel level);
-    }
-
-    @FunctionalInterface
-    public interface Writer<T> {
-        CompoundTag save(ServerLevel level, T value);
-    }
-
-    @FunctionalInterface
-    public interface Reader<T> {
-        void load(ServerLevel level, T value, CompoundTag tag);
-    }
-
     private static final class PersistentLevelAttachment<T> extends ServerLevelTrackedData {
         private final T value;
-        private final Writer<T> writer;
-        private final Reader<T> reader;
+        private final AttachmentWriter<ServerLevel, T> writer;
+        private final AttachmentReader<ServerLevel, T> reader;
 
         @SuppressWarnings({"unchecked", "rawtypes"})
         private PersistentLevelAttachment(
                 TrackedDataKey<? extends ServerLevelTrackedData> key,
                 ServerLevel level,
-                Factory<T> factory,
-                Writer<T> writer,
-                Reader<T> reader
+                AttachmentFactory<ServerLevel, T> factory,
+                AttachmentWriter<ServerLevel, T> writer,
+                AttachmentReader<ServerLevel, T> reader
         ) {
             super((TrackedDataKey) key, level);
             this.value = factory.create(level);
