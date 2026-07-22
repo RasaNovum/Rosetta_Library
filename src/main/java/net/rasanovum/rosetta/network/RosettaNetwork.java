@@ -1,21 +1,15 @@
 package net.rasanovum.rosetta.network;
 
-import dev.corgitaco.dataanchor.network.C2SNetworkContainer;
-import dev.corgitaco.dataanchor.network.NetworkContainer;
-import dev.corgitaco.dataanchor.network.Packet;
-import dev.corgitaco.dataanchor.network.S2CNetworkContainer;
-import dev.corgitaco.dataanchor.network.broadcast.PacketBroadcaster;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.rasanovum.rosetta.util.RegistryCompat;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
-//? if >=1.21
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 /** Packet registration and transport. */
 public final class RosettaNetwork {
@@ -26,11 +20,11 @@ public final class RosettaNetwork {
     }
 
     public static void sendToServer(RosettaPacket packet) {
-        PacketBroadcaster.C2S.sendToServer(packet);
+        NetworkBackend.INSTANCE.sendToServer(packet);
     }
 
     public static void sendToPlayer(RosettaPacket packet, ServerPlayer player) {
-        PacketBroadcaster.S2C.sendToPlayer(packet, player);
+        NetworkBackend.INSTANCE.sendToPlayer(packet, player);
     }
 
     @FunctionalInterface
@@ -40,20 +34,17 @@ public final class RosettaNetwork {
 
     public static final class Channel {
         private final String namespace;
-        private final C2SNetworkContainer serverbound;
-        private final S2CNetworkContainer clientbound;
+        private final Set<String> ids = new HashSet<>();
 
         private Channel(String namespace) {
             this.namespace = namespace;
-            this.serverbound = C2SNetworkContainer.of(namespace);
-            this.clientbound = S2CNetworkContainer.of(namespace);
         }
 
         public <T extends RosettaPacket> Channel serverbound(
                 String id, Class<T> type, BiConsumer<T, FriendlyByteBuf> writer,
                 Function<FriendlyByteBuf, T> reader, PacketHandler<T> handler
         ) {
-            register(serverbound, id, type, writer, reader, handler);
+            register(id, type, writer, reader, handler, true);
             return this;
         }
 
@@ -61,40 +52,22 @@ public final class RosettaNetwork {
                 String id, Class<T> type, BiConsumer<T, FriendlyByteBuf> writer,
                 Function<FriendlyByteBuf, T> reader, PacketHandler<T> handler
         ) {
-            register(clientbound, id, type, writer, reader, handler);
+            register(id, type, writer, reader, handler, false);
             return this;
         }
 
         private <T extends RosettaPacket> void register(
-                NetworkContainer container, String id, Class<T> type,
-                BiConsumer<T, FriendlyByteBuf> writer, Function<FriendlyByteBuf, T> reader,
-                PacketHandler<T> handler
+                String id, Class<T> type, BiConsumer<T, FriendlyByteBuf> writer,
+                Function<FriendlyByteBuf, T> reader, PacketHandler<T> handler, boolean serverbound
         ) {
-            PacketHandler<T> scheduled = (packet, level, player) -> {
-                if (level.isClientSide()) {
-                    ClientExecutor.execute(() -> handler.handle(packet, level, player));
-                } else {
-                    level.getServer().execute(() -> handler.handle(packet, level, player));
-                }
-            };
-
-            //? if >=1.21 {
-            var location = RegistryCompat.getLocation(namespace, id);
-            var payloadType = new CustomPacketPayload.Type<T>(location);
-            var codec = CustomPacketPayload.codec(writer::accept, reader::apply);
-            RosettaPacket.registerType(type, payloadType);
-            container.registerPacketHandler(new Packet.Handler(type, payloadType, codec,
-                    (packet, level, player) -> scheduled.handle((T) packet, level, player)));
-            //?} else {
-            /*container.registerPacketHandler(id, new Packet.Handler(type, writer, reader,
-                    (packet, level, player) -> scheduled.handle((T) packet, level, player)));
-            *///?}
-        }
-    }
-
-    private static final class ClientExecutor {
-        private static void execute(Runnable action) {
-            net.minecraft.client.Minecraft.getInstance().execute(action);
+            if (!ids.add(id)) {
+                throw new IllegalArgumentException("Duplicate packet id: " + namespace + ":" + id);
+            }
+            PacketDefinition<T> definition = new PacketDefinition<>(
+                    RegistryCompat.getLocation(namespace, id), type, writer, reader, handler
+            );
+            if (serverbound) NetworkBackend.INSTANCE.registerServerbound(definition);
+            else NetworkBackend.INSTANCE.registerClientbound(definition);
         }
     }
 }

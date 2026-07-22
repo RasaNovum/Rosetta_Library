@@ -15,10 +15,3 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
-
-[[dependencies.rosetta_library]]
-modId="dataanchor"
-type="required"
-versionRange="[${dataanchor_version},)"
-ordering="NONE"
-side="BOTH"

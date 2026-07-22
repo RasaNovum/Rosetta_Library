@@ -18,7 +18,6 @@ dependencies {
     minecraft("com.mojang:minecraft:${prop("deps.minecraft")}")
     implementation("net.fabricmc:fabric-loader:${prop("deps.loader")}")
     implementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
-    implementation(files(rootProject.file("libs/data-anchor/${prop("deps.minecraft")}-fabric/data-anchor-${prop("deps.data-anchor").substringBefore('-')}-fabric-official.jar")))
 }
 
 tasks.processResources {
@@ -26,7 +25,6 @@ tasks.processResources {
         "version" to project.version,
         "minecraft_version" to prop("deps.minecraft"),
         "loader_version" to prop("deps.loader"),
-        "dataanchor_version" to prop("deps.data-anchor").substringBefore('-'),
     )
     inputs.properties(props)
     filesMatching("fabric.mod.json") { expand(props) }

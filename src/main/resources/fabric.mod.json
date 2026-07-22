@@ -11,9 +11,11 @@
   "license": "MIT",
   "icon": "rosetta_library_icon.png",
   "environment": "*",
+  "entrypoints": {
+    "main": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabric"]
+  },
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "minecraft": "${minecraft_version}",
-    "dataanchor": ">=${dataanchor_version}"
+    "minecraft": "${minecraft_version}"
   }
 }

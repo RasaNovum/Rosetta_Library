@@ -14,7 +14,6 @@ version = prop("mod_version")
 base.archivesName = prop("archives_base_name")
 
 repositories {
-    maven("https://api.modrinth.com/maven")
     mavenCentral()
 }
 
@@ -23,7 +22,6 @@ dependencies {
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${prop("deps.loader")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
-    modImplementation("maven.modrinth:data-anchor:${prop("deps.data-anchor")}")
 }
 
 tasks.processResources {
@@ -31,7 +29,6 @@ tasks.processResources {
         "version" to project.version,
         "minecraft_version" to prop("deps.minecraft"),
         "loader_version" to prop("deps.loader"),
-        "dataanchor_version" to prop("deps.data-anchor").substringBefore('-'),
     )
     inputs.properties(props)
     filesMatching("fabric.mod.json") { expand(props) }

@@ -13,19 +13,9 @@ fun prop(name: String): String = versionProperties.getProperty(name)
 version = prop("mod_version")
 base.archivesName = prop("archives_base_name")
 
-repositories { maven("https://api.modrinth.com/maven") }
-
 neoForge {
     version = prop("deps.neoforge")
     mods { register("rosetta_library") { sourceSet(sourceSets.main.get()) } }
-}
-
-dependencies {
-    if (stonecutter.eval(stonecutter.current.version, ">=26.1")) {
-        implementation(files(rootProject.file("libs/data-anchor/${prop("deps.minecraft")}-neoforge/data-anchor-${prop("deps.data-anchor").substringBefore('-')}-neoforge-official.jar")))
-    } else {
-        implementation("maven.modrinth:data-anchor:${prop("deps.data-anchor")}")
-    }
 }
 
 tasks.processResources {
@@ -33,7 +23,6 @@ tasks.processResources {
         "version" to project.version,
         "minecraft_version_range" to prop("deps.minecraft_range"),
         "loader_version_range" to prop("deps.neoforge_range"),
-        "dataanchor_version" to prop("deps.data-anchor").substringBefore('-'),
     )
     inputs.properties(props)
     filesMatching("META-INF/neoforge.mods.toml") { expand(props) }
