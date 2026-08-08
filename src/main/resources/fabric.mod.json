@@ -12,7 +12,8 @@
   "icon": "rosetta_library_icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabric"]
+    "main": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabric"],
+    "client": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabricClient"]
   },
   "depends": {
     "fabricloader": ">=${loader_version}",
