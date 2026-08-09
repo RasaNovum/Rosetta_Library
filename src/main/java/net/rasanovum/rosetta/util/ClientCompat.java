@@ -1,5 +1,7 @@
 package net.rasanovum.rosetta.util;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -73,4 +75,11 @@ public final class ClientCompat {
         //?}
     }
 
+    public static void putVertex(PoseStack.Pose pose, VertexConsumer consumer, float x, float y, float z, int red, int green, int blue, int alpha) {
+        //? if <1.21 {
+        /*consumer.vertex(pose.pose(), x, y, z).color(red, green, blue, alpha).endVertex();
+        *///?} else {
+        consumer.addVertex(pose, x, y, z).setColor(red, green, blue, alpha);
+        //?}
+    }
 }
