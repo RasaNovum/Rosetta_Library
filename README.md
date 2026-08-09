@@ -43,3 +43,53 @@ See the [developer usage guide](documentation/USAGE.md) for supported targets, n
 ### Import
 
 Maven coordinates will be documented when public Maven distribution is available.
+
+### Registries
+
+Declare content once in common source. `RegistryHandle` is the same access type on every target, while `ModRegistrar` adapts Fabric's eager registration and Forge/NeoForge deferred registration.
+
+```java
+public final class ExampleContent {
+    public static final ModRegistrar REGISTRAR = new ModRegistrar("example_mod");
+
+    public static final ModRegistrar.BlockItemEntry<MachineBlock, MachineBlockItem> MACHINE =
+            REGISTRAR.blockWithItem(
+                    "machine",
+                    MachineBlock::new,
+                    BlockBehaviour.Properties.of().strength(3.0F),
+                    MachineBlockItem::new,
+                    new Item.Properties());
+
+    public static final RegistryHandle<BlockEntityType<MachineBlockEntity>> MACHINE_ENTITY =
+            REGISTRAR.blockEntity("machine", MachineBlockEntity::new, MACHINE.block());
+
+    public static final RegistryHandle<BroadKnifeItem> BROAD_KNIFE =
+            REGISTRAR.item("broad_knife", BroadKnifeItem::new, new Item.Properties());
+
+    static {
+        REGISTRAR.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS)
+                .add(MACHINE)
+                .addStacks("generated_machine_variants", output ->
+                        createMachineVariantStacks().forEach(output::accept));
+
+        REGISTRAR.creativeTab(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .add(BROAD_KNIFE);
+    }
+
+    private ExampleContent() {}
+}
+```
+
+Attach the registrar exactly once from each ordinary loader entrypoint:
+
+```java
+// Fabric
+ExampleContent.REGISTRAR.register(RegistrationContext.create());
+
+// Forge / NeoForge, using the native constructor's typed mod event bus
+ExampleContent.REGISTRAR.register(RegistrationContext.create(modEventBus));
+```
+
+Use `handle.get()` wherever the registered value is needed. Calling it before that registry's loader event finishes throws an error naming the unavailable identifier. `register(BuiltInRegistries.SOME_REGISTRY, path, factory)` covers other vanilla registries; paths are namespace-relative and duplicate paths in the same registry are rejected.
+
+Creative-tab declarations are attached by the same single `register(RegistrationContext)` call. `add(handle)`, `add(BlockItemEntry)`, and `add(ItemLike)` cover ordinary entries. `addStack(key, supplier)` creates one dynamic stack per rebuild, while `addStacks(key, output -> ...)` can emit any number of configured variants. Entry and callback order is declaration order; duplicate entries or callback keys and declarations made after registrar attachment fail descriptively.
