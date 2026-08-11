@@ -6,7 +6,7 @@
   "description": "Cross-version and cross-loader compatibility primitives for Minecraft mods.",
   "authors": ["Rasa Novum"],
   "contact": {
-    "sources": "https://github.com/RasaNovum/Rosetta_Library"
+    "sources": "https://github.com/Rasa-Novum/Rosetta_Library"
   },
   "license": "MIT",
   "icon": "rosetta_library_icon.png",

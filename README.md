@@ -46,7 +46,7 @@ The target-specific artifacts are published from the `maven` branch:
 
 ```kotlin
 repositories {
-    maven("https://raw.githubusercontent.com/RasaNovum/Rosetta_Library/maven/")
+    maven("https://raw.githubusercontent.com/Rasa-Novum/Rosetta_Library/maven/")
 }
 
 dependencies {

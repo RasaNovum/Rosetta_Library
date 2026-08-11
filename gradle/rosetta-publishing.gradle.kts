@@ -47,7 +47,7 @@ extensions.configure<PublishingExtension> {
             pom {
                 name = "Rosetta ($target)"
                 description = "Cross-version and cross-loader compatibility primitives for Minecraft mods."
-                url = "https://github.com/RasaNovum/Rosetta_Library"
+                url = "https://github.com/Rasa-Novum/Rosetta_Library"
                 licenses {
                     license {
                         name = "The MIT License"
@@ -55,9 +55,9 @@ extensions.configure<PublishingExtension> {
                     }
                 }
                 scm {
-                    connection = "scm:git:https://github.com/RasaNovum/Rosetta_Library.git"
-                    developerConnection = "scm:git:ssh://github.com/RasaNovum/Rosetta_Library.git"
-                    url = "https://github.com/RasaNovum/Rosetta_Library"
+                    connection = "scm:git:https://github.com/Rasa-Novum/Rosetta_Library.git"
+                    developerConnection = "scm:git:ssh://github.com/Rasa-Novum/Rosetta_Library.git"
+                    url = "https://github.com/Rasa-Novum/Rosetta_Library"
                 }
             }
         }
