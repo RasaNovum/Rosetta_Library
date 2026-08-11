@@ -7,7 +7,7 @@
   <version>0.1.0</version>
   <name>Rosetta (26.1-fabric)</name>
   <description>Cross-version and cross-loader compatibility primitives for Minecraft mods.</description>
-  <url>https://github.com/RasaNovum/Rosetta_Library</url>
+  <url>https://github.com/Rasa-Novum/Rosetta_Library</url>
   <licenses>
     <license>
       <name>The MIT License</name>
@@ -15,8 +15,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:https://github.com/RasaNovum/Rosetta_Library.git</connection>
-    <developerConnection>scm:git:ssh://github.com/RasaNovum/Rosetta_Library.git</developerConnection>
-    <url>https://github.com/RasaNovum/Rosetta_Library</url>
+    <connection>scm:git:https://github.com/Rasa-Novum/Rosetta_Library.git</connection>
+    <developerConnection>scm:git:ssh://github.com/Rasa-Novum/Rosetta_Library.git</developerConnection>
+    <url>https://github.com/Rasa-Novum/Rosetta_Library</url>
   </scm>
 </project>
