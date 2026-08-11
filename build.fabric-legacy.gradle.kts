@@ -78,3 +78,5 @@ tasks.named<AbstractArchiveTask>("remapJar") {
     doLast { stripFabricLoomVersion(archiveFile.get().asFile) }
 }
 tasks.named<AbstractArchiveTask>("remapSourcesJar") { archiveClassifier.set("${project.name}-sources") }
+
+apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))

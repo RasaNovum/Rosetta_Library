@@ -74,3 +74,5 @@ tasks.jar {
     archiveClassifier.set(project.name)
     doLast { stripFabricLoomVersion(archiveFile.get().asFile) }
 }
+
+apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))

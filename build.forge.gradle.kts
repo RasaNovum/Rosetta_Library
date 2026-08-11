@@ -40,3 +40,5 @@ java {
 }
 tasks.named<AbstractArchiveTask>("sourcesJar") { archiveClassifier.set("${project.name}-sources") }
 tasks.jar { archiveClassifier.set(project.name) }
+
+apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))

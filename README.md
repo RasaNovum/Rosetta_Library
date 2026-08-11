@@ -40,9 +40,21 @@ Available targets are `26.1-fabric`, `26.1-neoforge`, `1.21.1-fabric`, `1.21.1-n
 
 See the [developer usage guide](documentation/USAGE.md) for supported targets, networking examples, persistent attachments, and migration notes.
 
-### Import
+### Maven
 
-Maven coordinates will be documented when public Maven distribution is available.
+The target-specific artifacts are published from the `maven` branch:
+
+```kotlin
+repositories {
+    maven("https://raw.githubusercontent.com/RasaNovum/Rosetta_Library/maven/")
+}
+
+dependencies {
+    implementation("com.rasanovum.rosetta:rosetta-1.21.1-fabric:0.1.0")
+}
+```
+
+Use the artifact matching the Minecraft version and loader: `rosetta-1.20.1-fabric`, `rosetta-1.20.1-forge`, `rosetta-1.21.1-fabric`, `rosetta-1.21.1-neoforge`, `rosetta-26.1-fabric`, or `rosetta-26.1-neoforge`.
 
 ### Registries
 
