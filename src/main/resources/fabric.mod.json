@@ -11,6 +11,7 @@
   "license": "MIT",
   "icon": "rosetta_library_icon.png",
   "environment": "*",
+  "mixins": ["rosetta.mixins.json"],
   "entrypoints": {
     "main": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabric"],
     "client": ["net.rasanovum.rosetta.loaders.fabric.RosettaFabricClient"]

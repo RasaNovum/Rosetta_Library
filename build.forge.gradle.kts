@@ -27,6 +27,7 @@ tasks.processResources {
     inputs.properties(props)
     filesMatching("META-INF/mods.toml") { expand(props) }
     exclude("fabric.mod.json", "META-INF/neoforge.mods.toml")
+    exclude("rosetta.mixins.json")
 }
 
 val targetJavaVersion = prop("java_version").toInt()
@@ -39,6 +40,9 @@ java {
     withSourcesJar()
 }
 tasks.named<AbstractArchiveTask>("sourcesJar") { archiveClassifier.set("${project.name}-sources") }
-tasks.jar { archiveClassifier.set(project.name) }
+tasks.jar {
+    archiveClassifier.set(project.name)
+    exclude("net/rasanovum/rosetta/loaders/fabric/mixin/**")
+}
 
 apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))

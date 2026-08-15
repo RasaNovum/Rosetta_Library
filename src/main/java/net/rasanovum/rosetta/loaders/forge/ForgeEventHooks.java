@@ -9,6 +9,7 @@ import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ChunkWatchEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,6 +57,16 @@ public final class ForgeEventHooks {
     @SubscribeEvent
     public static void dimensionChanged(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) ServerHooks.playerChangedDimension(player);
+    }
+
+    @SubscribeEvent
+    public static void chunkWatch(ChunkWatchEvent.Watch event) {
+        ServerHooks.chunkSent(event.getPlayer(), event.getLevel(), event.getChunk());
+    }
+
+    @SubscribeEvent
+    public static void chunkUnwatch(ChunkWatchEvent.UnWatch event) {
+        ServerHooks.chunkUnwatched(event.getPlayer(), event.getLevel(), event.getPos());
     }
 
     @SubscribeEvent

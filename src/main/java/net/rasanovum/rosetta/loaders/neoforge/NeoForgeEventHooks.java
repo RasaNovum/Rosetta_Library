@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ChunkWatchEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
@@ -56,6 +57,16 @@ public final class NeoForgeEventHooks {
     @SubscribeEvent
     public static void dimensionChanged(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) ServerHooks.playerChangedDimension(player);
+    }
+
+    @SubscribeEvent
+    public static void chunkSent(ChunkWatchEvent.Sent event) {
+        ServerHooks.chunkSent(event.getPlayer(), event.getLevel(), event.getChunk());
+    }
+
+    @SubscribeEvent
+    public static void chunkUnwatch(ChunkWatchEvent.UnWatch event) {
+        ServerHooks.chunkUnwatched(event.getPlayer(), event.getLevel(), event.getPos());
     }
 
     @SubscribeEvent

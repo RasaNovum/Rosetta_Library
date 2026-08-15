@@ -7,6 +7,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,6 +32,8 @@ public final class ServerHooks {
     public static void serverStopping(MinecraftServer server) { CALLBACKS.forEach(c -> c.onServerStopping(server)); }
     public static void dataPackReloaded(MinecraftServer server) { CALLBACKS.forEach(c -> c.onDataPackReload(server)); }
     public static void playerChangedDimension(ServerPlayer player) { CALLBACKS.forEach(c -> c.onPlayerChangedDimension(player)); }
+    public static void chunkSent(ServerPlayer player, ServerLevel level, LevelChunk chunk) { CALLBACKS.forEach(c -> c.onChunkSent(player, level, chunk)); }
+    public static void chunkUnwatched(ServerPlayer player, ServerLevel level, ChunkPos pos) { CALLBACKS.forEach(c -> c.onChunkUnwatched(player, level, pos)); }
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) { CALLBACKS.forEach(c -> c.registerCommands(dispatcher)); }
 
     public static boolean beforeBlockBreak(LevelAccessor level, BlockPos pos, ServerPlayer player) {
@@ -47,6 +51,8 @@ public final class ServerHooks {
         default void onServerStopping(MinecraftServer server) {}
         default void onDataPackReload(MinecraftServer server) {}
         default void onPlayerChangedDimension(ServerPlayer player) {}
+        default void onChunkSent(ServerPlayer player, ServerLevel level, LevelChunk chunk) {}
+        default void onChunkUnwatched(ServerPlayer player, ServerLevel level, ChunkPos pos) {}
         default boolean beforeBlockBreak(LevelAccessor level, BlockPos pos, ServerPlayer player) { return true; }
         default void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {}
     }
