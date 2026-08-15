@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.rasanovum.rosetta:rosetta-1.21.1-fabric:0.1.0")
+    implementation("com.rasanovum.rosetta:rosetta-1.21.1-fabric:0.1.1")
 }
 ```
 
