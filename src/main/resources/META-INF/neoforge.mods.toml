@@ -6,7 +6,7 @@ license="MIT"
 modId="rosetta_library"
 version="${version}"
 displayName="Rosetta"
-logoFile="rosetta_library_icon.png"
+logoFile="logo.png"
 description='''Cross-version and cross-loader compatibility primitives for Minecraft mods.'''
 
 [[dependencies.rosetta_library]]

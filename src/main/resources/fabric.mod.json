@@ -9,7 +9,7 @@
     "sources": "https://github.com/Rasa-Novum/Rosetta_Library"
   },
   "license": "MIT",
-  "icon": "rosetta_library_icon.png",
+  "icon": "logo.png",
   "environment": "*",
   "mixins": ["rosetta.mixins.json"],
   "entrypoints": {

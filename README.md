@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="rosetta_library_icon_hd.png" alt="Rosetta Library icon">
+  <img src="src/main/resources/logo.png" alt="Rosetta Library icon">
 </p>
 
 <h1 align="center">Rosetta Library<br></h1>
