@@ -38,7 +38,7 @@ Available targets are `26.1-fabric`, `26.1-neoforge`, `1.21.1-fabric`, `1.21.1-n
 
 ## Usage
 
-See the [developer usage guide](documentation/USAGE.md) for supported targets, networking examples, persistent attachments, and migration notes.
+See the [developer usage guide](docs/USAGE.md) for supported targets, networking examples, persistent attachments, and migration notes.
 
 ### Maven
 
