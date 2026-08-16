@@ -98,7 +98,7 @@ Attach the registrar exactly once from each ordinary loader entrypoint:
 // Fabric
 ExampleContent.REGISTRAR.register(RegistrationContext.create());
 
-// Forge / NeoForge, using the native constructor's typed mod event bus
+// Forge / NeoForge
 ExampleContent.REGISTRAR.register(RegistrationContext.create(modEventBus));
 ```
 
