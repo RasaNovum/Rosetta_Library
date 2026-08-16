@@ -80,3 +80,4 @@ tasks.named<AbstractArchiveTask>("remapJar") {
 tasks.named<AbstractArchiveTask>("remapSourcesJar") { archiveClassifier.set("${project.name}-sources") }
 
 apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))
+apply(from = rootProject.file("gradle/rosetta-pack-metadata.gradle.kts"))

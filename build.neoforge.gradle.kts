@@ -46,3 +46,4 @@ tasks.jar {
 }
 
 apply(from = rootProject.file("gradle/rosetta-publishing.gradle.kts"))
+apply(from = rootProject.file("gradle/rosetta-pack-metadata.gradle.kts"))
